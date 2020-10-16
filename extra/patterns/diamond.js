@@ -22,4 +22,4 @@ function createDimondShape(size){
     }
     }
     
-    createDimondShape(9);
+    createDimondShape(5);
