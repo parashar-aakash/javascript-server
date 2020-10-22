@@ -1,20 +1,5 @@
-const permissions =
-{
-    'getUsers': {
-        all: ['head-trainer'],
-        read: ['trainee', 'trainer'],
-        write: ['trainer'],
-        Delete: [],
-    },
-    'getUser': {
-        all: ['head-trainer'],
-        read: ['trainer'],
-        write: ['trainee'],
-        Delete: [],
-    }
-}
-
-function hasPermission(moduleName, role, permissionType) {
+export default function hasPermission(moduleName, role, permissionType) {
+    let type;
     const { all, read, write, Delete } = moduleName;
     if (permissionType == 'all')
         type = all;
@@ -35,6 +20,6 @@ function hasPermission(moduleName, role, permissionType) {
             return false;
     }
 }
-const { getUsers, getUser } = permissions;
-let result = hasPermission(getUsers, 'head-trainer', 'Delete');
-console.log(result);
+// const { getUsers, getUser } = permissions;
+// let result = hasPermission(getUsers, 'head-trainer', 'Delete');
+// console.log(result);
