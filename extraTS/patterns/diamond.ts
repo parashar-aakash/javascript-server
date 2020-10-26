@@ -1,25 +1,37 @@
-export default function createDimondShape(size : number){
-    for(let i: number=1;i<=size;i++){
-        for(var s=size-1;s>=i;s--){
-        // process.stdout.write(" ");
+export default function createDimondShape ( size: number ) {
+    console.log('Print a diamond with rows ', size);
+    let i: number;
+    let j: number;
+    let k: number;
+    let l: number;
+    let str: string = ' ';
+    if (size <= 10 && size >= 2) {
+        for ( i = 0; i <= size; i++) {
+            str = '';
+            for ( j = size; j > i; j--) {
+                str += ' ';
+            }
+            for ( k = 1; k < i; k++) {
+                str += '*';
+            }
+            for ( l = 1; l <= i; l++) {
+                str += '*';
+            }
+            console.log(str);
         }
-        for(var j : number=1;j<=i;j++){
-        // process.stdout.write("* ")
-        }
-        console.log();
-        }
-        
-        if(i==size+1){
-        for(var i : number=0;i<=size-1;i++){
-        for(var s: number=1;s<=i;s++){
-        // process.stdout.write(" ");
-        }
-        for(var j: number=i;j<=size-1;j++){
-        // process.stdout.write("* ");
-        }
-        console.log();
-        }
+        for ( i = size; i >= 0; i--) {
+            str = '';
+            for ( j = size; j > i; j--) {
+                str += ' ';
+            }
+            for ( k = 1; k < i; k++) {
+                str += '*';
+            }
+            for ( l = 1; l <= i; l++) {
+                str += '*';
+            }
+            console.log(str);
         }
     }
-    
-    // createDimondShape(5);
+    else console.log('wrong input');
+}
