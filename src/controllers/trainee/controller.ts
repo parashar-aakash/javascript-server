@@ -30,14 +30,14 @@ get( req: Request, res: Response , next: NextFunction ) {
 
 post( req: Request, res: Response , next: NextFunction ) {
     try{
-        console.log(`Insode post route of Trainee Controller `);
+        console.log(`Inside Post/Create route of Trainee Controller `);
 
         res.status(200).json({
-            message : 'Trainee Added Successfully',
-            data : {
-                name : 'aakash',
-                branch : 'Noida'
-            }
+            message: 'Trainee Added Successfully',
+            data: {
+                id: req.body.id,
+                name: req.body.name 
+                }
         })
     }
     catch(err){
