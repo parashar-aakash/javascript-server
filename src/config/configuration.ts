@@ -1,8 +1,10 @@
-const enVars = require('dotenv').config();
+import { config } from 'dotenv';
+config();
+import { IConfig } from './IConfig';
 
-console.log('Inside config', enVars);
+const Config: IConfig = Object.freeze({
+    PORT: 9000,
+    NODE_ENV: 'Dev'
+});
 
-const config: IConfig = enVars.parsed;
-Object.freeze(config);
-
-export default config;
+export default Config;
