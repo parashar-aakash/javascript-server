@@ -1,21 +1,35 @@
 import * as express from 'express';
+import * as bodyparser from 'body-parser';
+import {notFoundRoute , errorHandler} from './libs/routes';
 class Server {
     app;
     constructor(private config) {
         this.app = express();
 
     }
+   public initBodyParser(){
+        this.app.use(bodyparser.json());
+    }
 
     bootstrap() {
+        this.initBodyParser();
         this.setupRoutes();
         return this;
     }
 
-    setupRoutes() {
-        const { app } = this;
-        app.get('/health-check', (req, res, next) => {
+   public setupRoutes() {
+        // const { app } = this;
+        
+        
+        this.app.use('/health-check', (req, res, next) => {
             res.send('I am Ok');
+            next();
         });
+        
+        this.app.use(notFoundRoute);
+        
+        this.app.use(errorHandler);
+        
         return this;
     }
     run () {
@@ -24,7 +38,7 @@ class Server {
             if (err) {
             console.log(err);
             }
-            console.log(`App is running ${PORT}`);
+            console.log(`App is running on port ${PORT}`);
         });
 
     }
