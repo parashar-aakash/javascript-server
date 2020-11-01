@@ -3,15 +3,15 @@ const config = {
          skip: {
               required: false,
                default: 0,
-                number: true, 
-                in: ['query'], 
+                number: true,
+                in: ['query'],
                 errorMessage: 'Skip is invalid'
-               }, 
-         limit: { 
+               },
+         limit: {
              required: false,
               default: 10,
                number: true,
-                in: ['query'], 
+                in: ['query'],
                 errorMessage: 'Limit is invalid'
                }
         },
@@ -19,10 +19,10 @@ const config = {
          id: {
               required: true,
                string: true,
-              in: ['body'],  
+              in: ['body'],
               custom: ( Value ) => {
                       console.log( `Value ${ Value }` );
-                     throw { error: 'Error Occured', message: 'Message' }
+                     throw { error: 'Error Occured', message: 'Message' };
                         }
              },
             name: {
@@ -33,25 +33,24 @@ const config = {
                  }
             },
     Delete: {
-         id: { 
+         id: {
              required: true,
-             errorMessage: 'Id is required', 
+             errorMessage: 'Id is required',
              in: ['params']
-             } 
+             }
             },
-    update:{ 
-                id: { 
+    update: {
+                id: {
                     required: true,
                     string: true,
-                    in:['body']
+                    in: ['body']
                     },
                 dataToUpdate: {
                     in: ['body'],
-                    required: true, 
+                    required: true,
                     isObject: true,
-                        custom: (dataToUpdate) => {}
-                            }
+                        }
                     }
-            }
+            };
 
 export default config;
