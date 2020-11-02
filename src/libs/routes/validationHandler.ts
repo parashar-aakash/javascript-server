@@ -4,11 +4,6 @@ import { NextFunction, Request, Response } from 'express';
 
 export default ( config ) => ( req: Request, res: Response, next: NextFunction  ) => {
     const errors = [];
-import { NextFunction, Request, Response } from 'express';
-// import { isNullOrUndefined } from 'util';
-
-export default ( config ) => ( req: Request, res: Response, next: NextFunction  ) => {
-    let errors = [];
     console.log( 'Inside ValidationHandler Middleware' );
     console.log( req.body );
     console.log( req.query );
@@ -60,50 +55,6 @@ export default ( config ) => ( req: Request, res: Response, next: NextFunction  
             }
         }
         // Checking for regex
-    keys.forEach((key) => { 
-        const obj = config[key];
-        console.log('key is' , key);
-        const values = obj.in.map( ( val ) => {
-            // console.log( 'val',val );
-            // console.log( 'key', key );
-            return req[ val ][ key ];
-        });
-
-        // Checking for In i.e Body or Query
-        if(isNull(req[obj.in])){
-            errors.push({
-                message: `Values should be passed through ${obj.in}`,
-                status: 400
-            })
-        }
-
-        // Checking for required
-        console.log('values is' ,values)
-        // console.log( 'values exist' , isNull( values ) );
-        if(obj.required){
-            if(isNull(values)){
-                errors.push({
-                    message: `${key} is required`,
-                    status: 404
-                })
-            }
-        }
-        if(obj.string){
-            if( ! ( typeof ( values ) === 'string' ) ) {
-                errors.push({
-                    message: `${key} Should be a String`,
-                    status: 404
-                })
-            }
-        }
-        if(obj.isObject){
-            if( ! ( typeof ( values ) == 'object' ) ) {
-                errors.push({
-                    message: `${key} Should be an object`,
-                    status: 404
-                })
-            }
-        }
         if (obj.regex) {
             const regex = obj.regex;
             if (!regex.test(values[0])) {
@@ -137,7 +88,7 @@ export default ( config ) => ( req: Request, res: Response, next: NextFunction  
     else {
         next();
     }
-    };
+};
 
 
 
