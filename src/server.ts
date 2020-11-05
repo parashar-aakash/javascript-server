@@ -1,6 +1,10 @@
 import * as express from 'express';
 import * as bodyparser from 'body-parser';
 import { notFoundRoute , errorHandler } from './libs/routes';
+<<<<<<< HEAD
+=======
+import Database from './libs/Database';
+>>>>>>> 648790ffa96c2dfd662ec58690188f13585e1acc
 import mainRouter from './router';
 
 class Server {
@@ -20,6 +24,10 @@ class Server {
     }
 
    public setupRoutes() {
+<<<<<<< HEAD
+=======
+        // const { app } = this;
+>>>>>>> 648790ffa96c2dfd662ec58690188f13585e1acc
         this.app.use( '/health-check', ( req, res, next ) => {
             res.send( 'I am Ok' );
             next();
@@ -30,13 +38,18 @@ class Server {
         return this;
     }
     run () {
-        const { app , config : {PORT }} = this;
-        app.listen( PORT , ( err ) => {
-            if ( err ) {
-            console.log( err );
-            }
-            console.log( `App is running on port ${ PORT }` );
-        });
+        const { app , config : {PORT, MONGO_URL }} = this;
+        Database.open(MONGO_URL)
+            .then((res) => {
+
+                app.listen( PORT , ( err ) => {
+                    if ( err ) {
+                    console.log( err );
+                    }
+                    console.log( `App is running on port ${ PORT }` );
+            });
+        })
+        .catch(err => console.log(err));
 
     }
 
