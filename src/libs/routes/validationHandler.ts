@@ -65,12 +65,6 @@ export default ( config ) => ( req: Request, res: Response, next: NextFunction  
                 });
             }
         }
-        // Checking for default
-        if (obj.default) {
-            if (isNull(values[0])) {
-                values[0] === obj.default;
-            }
-        }
         // Checking for number
         if (obj.number) {
             if (isNaN(values[0]) || values[0] === undefined) {
