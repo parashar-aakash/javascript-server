@@ -8,6 +8,6 @@ traineeRoutes.route('/')
         .get( validationHandler( config.get ) , TraineeController.get )
         .post( validationHandler( config.create ) , TraineeController.post )
         .put( validationHandler( config.update ) , TraineeController.put )
-        .delete( validationHandler( config.Delete ) , TraineeController.Delete );
+        .delete( validationHandler( config.delete ) , TraineeController.delete );
 
 export default traineeRoutes;

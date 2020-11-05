@@ -11,6 +11,7 @@ export default (config) => (req: Request, res: Response, next: NextFunction) => 
         const values = obj.in.map((val) => {
             return req[val][key];
         });
+
         // Checking for In i.e Body or Query
         if (Object.keys(req[obj.in]).length === 0) {
             errors.push({
@@ -58,12 +59,6 @@ export default (config) => (req: Request, res: Response, next: NextFunction) => 
                     location: obj.in,
                     message: obj.errorMessage || `${key} is not a valid expression`,
                 });
-            }
-        }
-        // Checking for default
-        if (obj.default) {
-            if (isNull(values[0])) {
-                values[0] === obj.default;
             }
         }
         // Checking for number
