@@ -8,3 +8,4 @@ const Config: IConfig = Object.freeze({
 });
 
 export default Config;
+
