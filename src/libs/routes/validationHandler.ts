@@ -1,4 +1,3 @@
-
 import { NextFunction, Request, Response } from 'express';
 
 
@@ -63,12 +62,6 @@ export default ( config ) => ( req: Request, res: Response, next: NextFunction  
                     location: obj.in,
                     message: obj.errorMessage || `${key} is not valid expression` ,
                 });
-            }
-        }
-        // Checking for default
-        if (obj.default) {
-            if (isNull(values[0])) {
-                values[0] === obj.default;
             }
         }
         // Checking for number
