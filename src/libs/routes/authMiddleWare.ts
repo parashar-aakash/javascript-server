@@ -1,14 +1,18 @@
 import * as jwt from 'jsonwebtoken';
 import hasPermission1 from './Permission';
-export default ( module: any , permissionType: string ) => ( req, res, next ) => {
+import IRequest from '../../IRequest';
+import { Response , NextFunction } from 'express';
+export default ( module: any , permissionType: string ) => ( req: IRequest, res: Response, next: NextFunction ) => {
 
     try {
     console.log( 'config is', module, permissionType );
     const token = req.headers.authorization;
     console.log( token );
     const User = jwt.verify( token, 'qwertyuiopasdfghjklzxcvbnm123456' );
-    console.log( User.Role );
-    const result = hasPermission1( module , User.Role , permissionType );
+    console.log( 'user', User.result );
+    req.userData = User.result;
+    console.log( User.result.role );
+    const result = hasPermission1( module , User.result.role , permissionType );
     console.log( 'result is', result );
     if ( result === true )
         next();

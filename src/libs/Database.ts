@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose';
+import seedData from './seedData';
 export default class Database {
     static open(mongoURL) {
         return new Promise((resolve, reject) => {
@@ -12,6 +13,7 @@ export default class Database {
                     return;
                 }
                 console.log('Database Connected');
+                seedData();
                 resolve(undefined);
             });
         });
