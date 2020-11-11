@@ -44,8 +44,8 @@ class UserController {
 
     public async update(req: IRequest, res: Response, next: NextFunction) {
         const { id, dataToUpdate } = req.body;
-        console.log('id', id)
-        console.log('dataToUpdate', dataToUpdate)
+        console.log( 'id', id );
+        console.log('dataToUpdate', dataToUpdate );
         const updator = req.userData._id;
         const user = new UserRepository();
         await user.updateUser( id, dataToUpdate, updator)

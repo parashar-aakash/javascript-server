@@ -40,10 +40,10 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
 
         let originalData;
         // console.log()
-        await this.findOne({ _id: id, updatedAt: null, deletedAt: null })
+        await this.findOne({ _id: id, updatedAt: undefined, deletedAt: undefined })
             .then((data) => {
-                if (data === null) {
-                    throw '';
+                if (data === undefined) {
+                    throw 'No User Found';
                 }
                 originalData = data;
                 const newId = VersionableRepository.generateObjectId();
@@ -63,8 +63,8 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
 
                 this.model.updateOne({ _id: oldId }, oldModel)
                     .then((res) => {
-                        if (res === null) {
-                            throw '';
+                        if (res === undefined) {
+                            return 'Not User To Update';
                         }
                         else
                             return res;
@@ -80,9 +80,9 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
 
         let originalData;
 
-        await this.findOne({ _id: id, deletedAt: null })
+        await this.findOne({ _id: id, deletedAt: undefined })
             .then((data) => {
-                if (data === null) {
+                if (data === undefined) {
                     throw '';
                 }
 
@@ -97,7 +97,7 @@ export default class VersionableRepository<D extends mongoose.Document, M extend
 
                 this.model.updateOne({ _id: oldId }, modelDelete)
                     .then((res) => {
-                        if (res === null) {
+                        if (res === undefined) {
                             throw '';
                         }
                     });
