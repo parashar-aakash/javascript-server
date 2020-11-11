@@ -5,6 +5,7 @@ import { Response , NextFunction } from 'express';
 export default ( module: any , permissionType: string ) => ( req: IRequest, res: Response, next: NextFunction ) => {
 
     try {
+    console.log( 'Inside ValidationHandler Middleware' );
     console.log( 'config is', module, permissionType );
     const token = req.headers.authorization;
     console.log( token );
