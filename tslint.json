@@ -43,6 +43,7 @@
     ],
     
     "no-var-keyword": true,
+    "eofline": true,
     
     "quotemark": [
     
