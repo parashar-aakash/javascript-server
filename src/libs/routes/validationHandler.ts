@@ -4,9 +4,9 @@ import { NextFunction, Request, Response } from 'express';
 export default ( config ) => ( req: Request, res: Response, next: NextFunction  ) => {
     const errors = [];
     console.log( 'Inside ValidationHandler Middleware' );
-    console.log( req.body );
-    console.log( req.query );
-    console.log(Object.keys( req.query ).length );
+    // console.log( req.body );
+    // console.log( req.query );
+    // console.log(Object.keys( req.query ).length );
     const keys = Object.keys( config );
     keys.forEach((key) => {
         const obj = config[key];

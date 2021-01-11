@@ -10,6 +10,6 @@ traineeRoutes.route( '/' )
         .get ( authMiddleWare ( permissions.getUsers, 'read' ), validationHandler( config.get ) , TraineeController.get )
         .post ( authMiddleWare ( permissions.getUser, 'write' ), validationHandler( config.create ) , TraineeController.post )
         .put ( authMiddleWare ( permissions.getUser, 'all' ), validationHandler( config.update ) , TraineeController.put )
-        .delete ( authMiddleWare ( permissions.getUser, 'Delete' ), validationHandler( config.delete ) , TraineeController.delete );
+        .delete ( authMiddleWare ( permissions.getUser, 'Delete' ), validationHandler( config.delete ) , TraineeController.delete )
 
 export default traineeRoutes;

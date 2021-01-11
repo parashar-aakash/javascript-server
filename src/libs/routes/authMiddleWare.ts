@@ -9,6 +9,7 @@ export default ( module: any , permissionType: string ) => ( req, res, next ) =>
     const User = jwt.verify( token, 'qwertyuiopasdfghjklzxcvbnm123456' );
     console.log( User.Role );
     const result = hasPermission1( module , User.Role , permissionType );
+
     console.log( 'result is', result );
     if ( result === true )
         next();
