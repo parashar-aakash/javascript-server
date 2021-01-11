@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 import IUserModel from './IUserModel';
 import { userModel } from './UserModel';
-
+import { hashSync } from 'bcryptjs';
 import VersionableRepository from '../versionable/VersionableRepository';
 
 export default class UserRepository extends VersionableRepository<IUserModel, mongoose.Model<IUserModel>> {
@@ -11,6 +11,9 @@ export default class UserRepository extends VersionableRepository<IUserModel, mo
     }
 
     public createUser(data, creator) {
+        const hashedPass = hashSync(data.password, 10);
+        data.password = hashedPass;
+
         return super.create(data, creator);
     }
 

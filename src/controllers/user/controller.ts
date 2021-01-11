@@ -1,6 +1,6 @@
 import * as jwt from 'jsonwebtoken';
-import { Request, Response, NextFunction } from 'express';
-
+import { Response, NextFunction } from 'express';
+import { hashSync, compare } from 'bcrypt';
 import UserRepository from '../../repositories/user/UserRepository';
 import { config } from '../../config';
 import IRequest from '../../IRequest';
@@ -29,13 +29,15 @@ class UserController {
         await user.createUser({ email, name, role, password }, creator)
             .then(() => {
                 console.log(req.body);
+                const hashedPassword = hashSync(password, 10);
+                console.log(hashedPassword);
                 res.send({
                     message: 'User Created Successfully!',
                     data: {
                         'name': name,
                         'email': email,
                         'role': role,
-                        'password': password
+                        'password': hashedPassword
                     },
                     code: 200
                 });
@@ -44,48 +46,47 @@ class UserController {
 
     public async update(req: IRequest, res: Response, next: NextFunction) {
         const { id, dataToUpdate } = req.body;
-        console.log( 'id', id );
-        console.log('dataToUpdate', dataToUpdate );
+        console.log('id', id);
+        console.log('dataToUpdate', dataToUpdate);
         const updator = req.userData._id;
         const user = new UserRepository();
-        await user.updateUser( id, dataToUpdate, updator)
-        .then((result) => {
-            res.send({
-                data: result,
-                message: 'User Updated',
-                code: 200
+        await user.updateUser(id, dataToUpdate, updator)
+            .then((result) => {
+                res.send({
+                    data: result,
+                    message: 'User Updated',
+                    code: 200
+                });
+            })
+            .catch((err) => {
+                res.send({
+                    error: 'User Not Found for update',
+                    code: 404
+                });
             });
-        })
-        .catch ((err) => {
-            res.send({
-                error: 'User Not Found for update',
-                code: 404
-            });
-        });
     }
 
     public async remove(req: IRequest, res: Response, next: NextFunction) {
-        const  id  = req.params.id;
+        const id = req.params.id;
         const remover = req.userData._id;
         const user = new UserRepository();
         await user.deleteData(id, remover)
-        .then((result) => {
-            res.send({
-                message: 'Deleted successfully',
-                code: 200
+            .then((result) => {
+                res.send({
+                    message: 'Deleted successfully',
+                    code: 200
+                });
+            })
+            .catch((err) => {
+                res.send({
+                    message: 'User not found to be deleted',
+                    code: 404
+                });
             });
-        })
-        .catch ((err) => {
-            res.send({
-                message: 'User not found to be deleted',
-                code: 404
-            });
-        });
     }
 
     public async login(req: IRequest, res: Response, next: NextFunction) {
         const { email } = req.body;
-
         const user = new UserRepository();
 
         await user.getUser({ email })
@@ -99,24 +100,26 @@ class UserController {
                 }
 
                 const { password } = userData;
-
-                if (password !== req.body.password) {
-                    res.status(401).send({
-                        err: 'Invalid Password',
-                        code: 401
-                    });
-                    return;
-                }
-
-                const token = jwt.sign(userData.toJSON(), config.KEY);
-                res.send({
-                    message: 'Login Successfull',
-                    status: 200,
-                    'token': token
-                });
-                return;
-
-            });
+                console.log('passwords', req.body.password);
+                compare(req.body.password, password, (err, result) => {
+                    if (err)
+                        throw err;
+                    if (result) {
+                        const token = jwt.sign(userData.toJSON(), config.KEY, { expiresIn: '1h' });
+                        res.send({
+                            message: 'Login Successfull',
+                            status: 200,
+                            'token': token
+                        });
+                    }
+                    else {
+                        res.status(401).send({
+                            err: 'Incorrect Password',
+                            status: 401,
+                        });
+                    }
+                })
+            })
     }
 
 }
