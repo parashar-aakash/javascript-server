@@ -28,7 +28,6 @@ class UserController {
         const user = new UserRepository();
         await user.createUser({ email, name, role, password }, creator)
             .then(() => {
-                console.log(req.body);
                 const hashedPassword = hashSync(password, 10);
                 console.log(hashedPassword);
                 res.send({
@@ -46,8 +45,6 @@ class UserController {
 
     public async update(req: IRequest, res: Response, next: NextFunction) {
         const { id, dataToUpdate } = req.body;
-        console.log('id', id);
-        console.log('dataToUpdate', dataToUpdate);
         const updator = req.userData._id;
         const user = new UserRepository();
         await user.updateUser(id, dataToUpdate, updator)
@@ -100,7 +97,6 @@ class UserController {
                 }
 
                 const { password } = userData;
-                console.log('passwords', req.body.password);
                 compare(req.body.password, password, (err, result) => {
                     if (err)
                         throw err;
