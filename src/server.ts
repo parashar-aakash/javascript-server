@@ -3,11 +3,12 @@ import * as bodyparser from 'body-parser';
 import { notFoundRoute , errorHandler } from './libs/routes';
 import Database from './libs/Database';
 import mainRouter from './router';
-
+import * as cors from 'cors';
 class Server {
     app;
     constructor(private config) {
         this.app = express();
+        this.app.use(cors());
 
     }
    public initBodyParser() {
