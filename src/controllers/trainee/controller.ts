@@ -58,7 +58,7 @@ put( req: Request, res: Response , next: NextFunction ) {
     }
 }
 
-Delete( req: Request, res: Response , next: NextFunction ) {
+delete( req: Request, res: Response , next: NextFunction ) {
     try {
         console.log(`Insode delte route of Trainee Controller `);
 

@@ -1,16 +1,14 @@
 import * as express from 'express';
 import * as bodyparser from 'body-parser';
 import { notFoundRoute , errorHandler } from './libs/routes';
-<<<<<<< HEAD
-=======
 import Database from './libs/Database';
->>>>>>> 648790ffa96c2dfd662ec58690188f13585e1acc
 import mainRouter from './router';
-
+import * as cors from 'cors';
 class Server {
     app;
     constructor(private config) {
         this.app = express();
+        this.app.use(cors());
 
     }
    public initBodyParser() {
@@ -24,10 +22,6 @@ class Server {
     }
 
    public setupRoutes() {
-<<<<<<< HEAD
-=======
-        // const { app } = this;
->>>>>>> 648790ffa96c2dfd662ec58690188f13585e1acc
         this.app.use( '/health-check', ( req, res, next ) => {
             res.send( 'I am Ok' );
             next();
