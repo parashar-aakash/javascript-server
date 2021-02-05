@@ -1,12 +1,14 @@
 import * as express from 'express';
 import * as bodyparser from 'body-parser';
 import { notFoundRoute , errorHandler } from './libs/routes';
+import Database from './libs/Database';
 import mainRouter from './router';
-
+import * as cors from 'cors';
 class Server {
     app;
     constructor(private config) {
         this.app = express();
+        this.app.use(cors());
 
     }
    public initBodyParser() {
@@ -31,13 +33,18 @@ class Server {
         return this;
     }
     run () {
-        const { app , config : {PORT }} = this;
-        app.listen( PORT , ( err ) => {
-            if ( err ) {
-            console.log( err );
-            }
-            console.log( `App is running on port ${ PORT }` );
-        });
+        const { app , config : {PORT, MONGO_URL }} = this;
+        Database.open(MONGO_URL)
+            .then((res) => {
+
+                app.listen( PORT , ( err ) => {
+                    if ( err ) {
+                    console.log( err );
+                    }
+                    console.log( `App is running on port ${ PORT }` );
+            });
+        })
+        .catch(err => console.log(err));
 
     }
 
